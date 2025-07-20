@@ -1,0 +1,16 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+
+# Environment variables
+.env
+
+# SQLite database
+*.sqlite3
+db.sqlite3
+
+# OS junk
+.DS_Store
