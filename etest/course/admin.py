@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from plan.models import Plan
+from course.models import Course
 
 # Register your models here.
-admin.site.register(Plan)
+admin.site.register(Course)

@@ -11,8 +11,9 @@ import google.generativeai as genai
 import os
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-
-from exam.models import ExamResult
+from django.contrib.auth.models import User
+from exam.models import ExamResult 
+from django.db.models import Avg
 from exam.serializers import ExamResultSerializer
 
 
@@ -132,3 +133,9 @@ class ExamResultView(APIView):
         serializer = ExamResultSerializer(results, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
         
+
+
+
+
+
+

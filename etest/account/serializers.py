@@ -12,11 +12,17 @@ class SignupSerializer(serializers.ModelSerializer):
         username = validated_data['username']
         email = validated_data['email']
         password = validated_data['password']
+        first_name = validated_data['first_name']
+        last_name = validated_data['last_name']
+
 
         return User.objects.create_user(
             username=username,
             email=email,
-            password=password
+            password=password,
+            first_name= first_name,
+            last_name = last_name
+
         )
 
 
@@ -26,6 +32,10 @@ class LoginSerializer(serializers.Serializer):
 
 
 
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'first_name', 'last_name']
 
 
 

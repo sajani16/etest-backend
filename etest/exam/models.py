@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 class ExamResult(models.Model):
+    data = models.JSONField()
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     score = models.IntegerField()
     total_questions = models.IntegerField()
