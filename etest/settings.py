@@ -32,11 +32,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://celebrated-magic-production.up.railway.app'
-]
-
-
 
 # Application definition
 
