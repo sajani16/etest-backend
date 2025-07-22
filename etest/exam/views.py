@@ -81,7 +81,7 @@ Use this description for more context: "{description}".
 
 The format MUST be a pure JSON array of objects, where each object has:
 - "question": The question text
-- "options": A string with 4 options separated by comma character. Do not use any kind of numbering only use comma between texts"
+- "options": A string with 4 options separated by @@@  triple @ character. Do not use any kind of numbering only use @@@ between texts"
 - "answer": The correct option letter exactly one of the 4 options return index of the correct answer in number 1, 2, 3 or 4.
 
 ⚠️ Do not include any explanations, code blocks, or markdown.
@@ -121,7 +121,7 @@ class ExamResultView(APIView):
     def post(self, request):
         serializer = ExamResultSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=request.user)
+            serializer.save(user=request.user )
             return Response({"message": "Exam result saved successfully"}, status=status.HTTP_201_CREATED)
         print("Serializer errors:", serializer.errors)  
 
