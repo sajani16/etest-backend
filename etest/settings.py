@@ -60,9 +60,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = [
+    "https://vedantaq.vercel.app",
+]
 
 CORS_ALLOW_CREDENTIALS = True
+
 
 ROOT_URLCONF = 'etest.urls'
 
