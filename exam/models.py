@@ -6,7 +6,7 @@ class ExamResult(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     score = models.IntegerField()
     total_questions = models.IntegerField()
-    topic = models.CharField(max_length=100)
+    topic = models.CharField(max_length=100 ,null=True, blank=True)
     exam_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
