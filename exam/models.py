@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class ExamResult(models.Model):
     details = models.JSONField()
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE)
     score = models.IntegerField()
     total_questions = models.IntegerField()
     topic = models.CharField(max_length=100 ,null=True, blank=True)

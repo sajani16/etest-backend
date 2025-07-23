@@ -29,8 +29,14 @@ SECRET_KEY = 'django-insecure-ol20mm+6=4rk-=say78v0bs6uu_fka#9wa3gw2b@=$tnzn!j=z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "https://vedantaq.vercel.app",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+]
 
+AUTH_USER_MODEL = 'account.CustomUser'
 
 # Application definition
 
@@ -62,10 +68,11 @@ MIDDLEWARE = [
 
 
 CORS_ALLOWED_ORIGINS = [
+    "https://vedantaq.vercel.app",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "http://localhost:5173",
-    "https://vedantaq.vercel.app"
+    
 ]
 
 CORS_ALLOW_CREDENTIALS = True

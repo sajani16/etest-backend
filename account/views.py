@@ -1,4 +1,6 @@
 # import secrets
+import random
+from account.models import CustomUser
 from rest_framework.views import APIView
 from django.shortcuts import render
 # from django.http import HttpResponse
@@ -9,9 +11,8 @@ from rest_framework import status
 # from account.models import UserToken
 from .serializers import  SignupSerializer, UserProfileSerializer
 from rest_framework.permissions import IsAuthenticated
-
-
-
+from django.core.mail import send_mail
+from rest_framework.permissions import AllowAny
 
 # Create your views here.
 # @api_view(['POST'])
@@ -50,18 +51,32 @@ from rest_framework.permissions import IsAuthenticated
 
 
 class SignupView(APIView):
+    authentication_classes = []
+    permission_classes = [AllowAny]
+    
     def post(self , request):
         serializer = SignupSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response({"message": "User created successfully"}, status=status.HTTP_201_CREATED)
+            user = serializer.save()
+            user.is_active = False
+            otp = str(random.randint(100000, 999999))
+            user.otp_code = otp
+            user.save()
+
+            # send_mail(
+            #     subject='Verify your account',
+            #     message=f'Your OTP is {otp}',
+            #     from_email='noreply@vedantaq.com',
+            #     recipient_list=[user.email],
+            # )
+            return Response({"message": "OTP sent to email","user_id":user.id}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
     def get (self,request):
-        serializer =    UserProfileSerializer(request.user)
+        serializer = UserProfileSerializer(request.user)
         return Response(serializer.data)
     
     def patch(self, request):
@@ -78,4 +93,21 @@ class UserProfileView(APIView):
 
 
 
+class VerifyOTPView(APIView):
+    def post (self,request):
+        user_id = request.data.get('user_id')
+        otp = request.data.get('otp')
+        
+        try:
+            user = CustomUser.objects.get(id=user_id)
+        except CustomUser.DoesNotExist:
+            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        if user.otp_code == otp:
+            user.is_Active = True
+            user.otp_code = ''
+            user.save()
+            return Response({"message": "Account verified successfully"}, status=status.HTTP_200_OK)
+        return Response({"error": "Invalid OTP"}, status=status.HTTP_400_BAD_REQUEST)
 
+            
