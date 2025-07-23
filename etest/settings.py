@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,9 +45,8 @@ INSTALLED_APPS = [
     'account',
     'exam',
     'course',
-    'corsheaders',
     'rest_framework',
-     'django_filters'
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -61,10 +61,14 @@ MIDDLEWARE = [
 ]
 
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "https://vedantaq.vercel.app"
+]
 
-
-CORS_ALLOW_CREDENTIALS = False
+CORS_ALLOW_CREDENTIALS = True
 
 
 ROOT_URLCONF = 'etest.urls'
