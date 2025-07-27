@@ -55,6 +55,8 @@ class SignupView(APIView):
     permission_classes = [AllowAny]
     
     def post(self , request):
+        from django.core.mail import EmailMultiAlternatives
+        from django.conf import settings
         serializer = SignupSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
@@ -63,12 +65,18 @@ class SignupView(APIView):
             user.otp_code = otp
             user.save()
 
-            # send_mail(
-            #     subject='Verify your account',
-            #     message=f'Your OTP is {otp}',
-            #     from_email='noreply@vedantaq.com',
-            #     recipient_list=[user.email],
-            # )
+            subject = f"VedantaQ OTP Verification"
+            text_content = f"Your OTP for VedantaQ signup is: {otp}"
+            html_content = f"<p>Your <strong>OTP</strong> for VedantaQ signup is: <strong>{otp}</strong></p>"
+            email = EmailMultiAlternatives(
+                subject=subject,
+                body=text_content,
+                from_email=settings.EMAIL_HOST_USER,
+                to=[user.email],
+            )
+            email.attach_alternative(html_content, "text/html")
+            email.send()
+
             return Response({"message": "OTP sent to email","user_id":user.id}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

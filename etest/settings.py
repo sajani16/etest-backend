@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+
 import os
+from decouple import config
 
 
 from datetime import timedelta
@@ -33,7 +35,7 @@ ALLOWED_HOSTS = [
     "https://vedantaq.vercel.app",
     "etest-backend-g0nd.onrender.com",
     "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    "127.0.0.1",
     "http://localhost:5173",
 ]
 
@@ -53,7 +55,8 @@ INSTALLED_APPS = [
     'exam',
     'course',
     'rest_framework',
-    'django_filters'
+    'django_filters',
+    
 ]
 
 MIDDLEWARE = [
@@ -71,7 +74,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "https://vedantaq.vercel.app",
     "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    "http://127.0.0.1:8000",
     "http://localhost:5173",
     
 ]
@@ -141,16 +144,22 @@ USE_I18N = True
 USE_TZ = True
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
-
 # STATIC_URL = 'static/'
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 # Whitenoise middleware
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+
+# Email configuration using python-decouple
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 
 # Default primary key field type
@@ -170,3 +179,9 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
 }
+
+
+import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

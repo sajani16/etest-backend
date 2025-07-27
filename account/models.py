@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class CustomUser(AbstractUser):
-    pass
+    otp_code = models.CharField(max_length=10, blank=True, null=True, help_text="Temporary OTP for email verification")
 
 # class UserToken(models.Model):
 #     user = models.OneToOneField(User ,on_delete=models.CASCADE)
