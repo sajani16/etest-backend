@@ -32,11 +32,13 @@ SECRET_KEY = 'django-insecure-ol20mm+6=4rk-=say78v0bs6uu_fka#9wa3gw2b@=$tnzn!j=z
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    
     "https://vedantaq.vercel.app",
     "etest-backend-g0nd.onrender.com",
     "http://localhost:3000",
     "127.0.0.1",
-    "http://localhost:5173",
+    "localhost:5173",
+    "celebrated-magic-production.up.railway.app"
 ]
 
 AUTH_USER_MODEL = 'account.CustomUser'
