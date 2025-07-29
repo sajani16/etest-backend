@@ -1,5 +1,7 @@
 # import secrets
+from dbm import error
 import random
+from xml.parsers.expat import errors
 from account.models import CustomUser
 from rest_framework.views import APIView
 from django.shortcuts import render
@@ -79,6 +81,7 @@ class SignupView(APIView):
 
             return Response({"message": "OTP sent to email","user_id":user.id}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 
 
 class UserProfileView(APIView):
@@ -112,7 +115,7 @@ class VerifyOTPView(APIView):
             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
         
         if user.otp_code == otp:
-            user.is_Active = True
+            user.is_active = True
             user.otp_code = ''
             user.save()
             return Response({"message": "Account verified successfully"}, status=status.HTTP_200_OK)
